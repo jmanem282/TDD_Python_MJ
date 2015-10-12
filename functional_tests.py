@@ -24,7 +24,7 @@ class NewVisitorTest(unittest.TestCase):
 		# She is invited to enter a to-do item stright away
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		self.assertEqual(
-			inputbox.get_attribute('placehoder'),
+			inputbox.get_attribute('placeholder'),
 			'Enter a to-do item'
 		)
 		# She types "Buy peacock feathers" into a text box (Edith's hobby
@@ -33,12 +33,13 @@ class NewVisitorTest(unittest.TestCase):
 
 		# When she hits enter, the pages updates, and now the page lists
 		# "1: Buy peacock feathers" as an item in a to-do list
-		inputbox.send_keys(keys.ENTER)
+		inputbox.send_keys(Keys.ENTER)
 
 		table = self.browser.find_element_by_id('id_list_table')
 		rows = table.find_elements_by_tag_name('tr')
 		self.assertTrue(
-			any(row.tex == '1: Buy peacock feathers' for row in rows)
+			any(row.tex == '1: Buy peacock feathers' for row in rows),
+			"New to-do item did not appear in table"
 		)
 
 		# There is still a tex box inviting her to add another item. She
