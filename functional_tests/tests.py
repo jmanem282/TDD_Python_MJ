@@ -19,9 +19,9 @@ class NewVisitorTest(StaticLiveServerTestCase):
 		if cls.server_url == cls.live_server_url:
 			super().tearDownClass()
 
-
 	def setUp(self):
 		self.browser = webdriver.Firefox()
+		self.browser.implicitly_wait(3)
 
 	def tearDown(self):
 		self.browser.refresh()
@@ -48,6 +48,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
 			inputbox.get_attribute('placeholder'),
 			'Enter a to-do item'
 		)
+
 		# She types "Buy peacock feathers" into a text box (Edith's hobby
 		# is tying fly-fishing lures)
 		inputbox.send_keys('Buy peacock feathers')
@@ -66,9 +67,9 @@ class NewVisitorTest(StaticLiveServerTestCase):
 		inputbox.send_keys(Keys.ENTER)
 
 		# The page updates again, and now shows both items on her list
-		self.check_for_row_in_list_table('1: Buy peacock feathers')
 		self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
-
+		self.check_for_row_in_list_table('1: Buy peacock feathers')
+		
 		# Now a new user, Francis, comes along to the site.
 
 		## We use a new browser session to make sure that no information
@@ -101,7 +102,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
 		# Satisfied, they both go back to sleep
 
-	def test_layout_and_stylling(self):
+	def test_layout_and_styling(self):
 		# Edith goes to the home page
 		self.browser.get(self.server_url)
 		self.browser.set_window_size(1024, 768)
