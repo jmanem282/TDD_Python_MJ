@@ -9,7 +9,7 @@ from lists.models import Item, List
 class HomePageTest(TestCase):
 
 	def test_root_url_resolves_to_home_page_view(self):
-		found = resolve ('/') 
+		found = resolve('/') 
 		self.assertEqual(found.func, home_page)
 
 	def test_home_page__returns_correct_html(self):
@@ -46,8 +46,8 @@ class NewItemTest(TestCase):
 		correct_list = List.objects.create()
 
 		self.client.post(
-			'/list/%d/add_item' % (correct_list.id,),
-			data={'item_text': 'A new item for existing list'}
+			'/lists/%d/add_item' % (correct_list.id,),
+			data={'item_text': 'A new item for an existing list'}
 		)
 
 		self.assertEqual(Item.objects.count(), 1)
@@ -72,7 +72,7 @@ class ListViewTest(TestCase):
 	
 	def test_uses_list_template(self):
 		list_ = List.objects.create()
-		response= self.client.get('/lists/%d/' % (list_.id,))
+		response = self.client.get('/lists/%d/' % (list_.id,))
 		self.assertTemplateUsed(response, 'list.html')
 
 	def test_displays_only_items_for_that_list(self):
@@ -83,7 +83,7 @@ class ListViewTest(TestCase):
 		Item.objects.create(text='other list item 1', list=other_list)
 		Item.objects.create(text='other list item 2', list=other_list)
 
-		response= self.client.get('/lists/%d/' % (correct_list.id,))
+		response = self.client.get('/lists/%d/' % (correct_list.id,))
 
 		self.assertContains(response, 'itemey 1')
 		self.assertContains(response, 'itemey 2')
@@ -93,7 +93,7 @@ class ListViewTest(TestCase):
 	def test_passes_correct_list_to_template(self):
 		other_list = List.objects.create()
 		correct_list = List.objects.create()
-		response= self.client.get('/lists/%d/' % (correct_list.id,))
+		response = self.client.get('/lists/%d/' % (correct_list.id,))
 		self.assertEqual(response.context['list'], correct_list)
 
 
