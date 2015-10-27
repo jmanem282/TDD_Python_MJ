@@ -107,7 +107,7 @@ class ListViewTest(TestCase):
 			'/lists/%d/' % (list_.id,),
 			data={'item_text': ''}
 		)
-	self.assertEqual(response.status_code, 200)
-	self.assertTemplateUsed(response, 'list.html')
-	expected_error = escape("You can't have an empty list item")
-	self.assertContains(response, expected_error)
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'list.html')
+		expected_error = escape("You can't have an empty list item")
+		self.assertContains(response, expected_error)
