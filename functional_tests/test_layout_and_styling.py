@@ -1,4 +1,4 @@
-from .base import FunctionalTests
+from .base import FunctionalTest
 
 class LayoutAndStylingTest(FunctionalTest):
 
